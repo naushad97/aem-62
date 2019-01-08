@@ -1,0 +1,28 @@
+<configuration scan="true">
+	<jmxConfigurator />
+	<newRule pattern="*/configuration/osgi"
+		actionClass="org.apache.sling.commons.log.logback.OsgiAction" />
+	<newRule pattern="*/configuration/appender-ref-osgi"
+		actionClass="org.apache.sling.commons.log.logback.OsgiAppenderRefAction" />
+	<osgi />
+	<appender name="SampleProject.log" class="ch.qos.logback.core.FileAppender">
+		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+			<evaluator class="ch.qos.logback.classic.boolex.GEventEvaluator"><!-- defaults to type ch.qos.logback.classic.boolex.JaninoEventEvaluator -->
+				<expression>return true;
+				</expression>
+			</evaluator>
+			<OnMismatch>DENY</OnMismatch>
+			<OnMatch>ACCEPT</OnMatch>
+		</filter>
+		<file>SampleProject.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>{0,date,dd.MM.yyyy HH:mm:ss.SSS} *{4}* [{2}] {3} {5}
+			</pattern>
+			<immediateFlush>true</immediateFlush>
+		</encoder>
+	</appender>
+	<logger name="com.aem.community" level="DEBUG" additivity="false"/>
+		<!--<appender-ref ref="SampleProject.log"/>
+	</logger>-->
+</configuration>

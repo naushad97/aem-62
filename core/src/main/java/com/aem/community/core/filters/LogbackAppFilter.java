@@ -31,7 +31,7 @@ import ch.qos.logback.core.spi.FilterReply;
 /**
  * Simple servlet filter component that logs incoming requests.
  */
-@Component(immediate=true)
+//@Component(immediate=true)
 public class LogbackAppFilter extends Filter<ILoggingEvent>{
 
 	
@@ -46,6 +46,11 @@ public class LogbackAppFilter extends Filter<ILoggingEvent>{
 		System.out.println("LogbackAppFilter:: "+arg0.getThreadName());
 		System.out.println("LogbackAppFilter.event:: "+arg0.getMarker());
 		System.out.println("MDC :: "+MDC.get("whs"));
+		int counter = 0;
+		if(MDC.get("whs") != null) {
+			counter = Integer.parseInt(MDC.get("whs"));
+		}
+		//if(counter %2)
 		if(null != MDC.get("whs") && MDC.get("whs").equalsIgnoreCase("true")){
             return FilterReply.ACCEPT;
         }

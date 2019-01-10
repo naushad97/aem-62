@@ -39,12 +39,13 @@ import org.slf4j.MDC;
 public class LoggingFilter implements Filter {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
+	static int counter = 1;
 
 	@Override
 	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain filterChain)
 			throws IOException, ServletException {
 		try {
-			System.out.println("Adding MDC");
+			System.out.println("In filter :: counter :: "+counter);
 			final SlingHttpServletRequest slingRequest = (SlingHttpServletRequest) request;
 			logger.debug("request for {}, with selector {}", slingRequest.getRequestPathInfo().getResourcePath(),
 					slingRequest.getRequestPathInfo().getSelectorString());
@@ -60,7 +61,15 @@ public class LoggingFilter implements Filter {
 					}
 				}
 			}
-			MDC.put("whs", "true");
+			
+			if(counter %2 == 0) {
+				MDC.put("whs", "app");
+				logger.info("It is even, so logging in APP file");
+			} else {
+				MDC.put("whs", "scan");
+				logger.info("It is odd, so logging in SCAN file");
+			}
+			counter++;
 			filterChain.doFilter(request, response);
 		} finally {
 			System.out.println("Removing MDC");

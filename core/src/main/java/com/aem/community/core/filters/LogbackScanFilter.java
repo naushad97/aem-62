@@ -31,7 +31,7 @@ import ch.qos.logback.core.spi.FilterReply;
 /**
  * Simple servlet filter component that logs incoming requests.
  */
-@Component(immediate=true)
+//@Component(immediate=true)
 public class LogbackScanFilter extends Filter<ILoggingEvent>{
 
 	

@@ -27,7 +27,7 @@ import org.apache.felix.scr.annotations.Deactivate;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
-@Component(immediate = true)
+//@Component(immediate = true)
 public class ConfigScanExample {
     private ServiceRegistration registration;
 

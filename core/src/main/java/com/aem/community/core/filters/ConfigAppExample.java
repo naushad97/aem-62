@@ -37,7 +37,14 @@ public class ConfigAppExample {
         props.setProperty("logbackConfig","true");
 
         String config  ="<included>\n"+
-						"<appender name=\"app\" class=\"ch.qos.logback.core.FileAppender\">\n"+
+						"<appender name=\"SIFT\" class=\"ch.qos.logback.classic.sift.SiftingAppender\">\n"+
+						"<discriminator>"+
+					        "<key>whs</key>"+
+					        "<defaultValue>${sling.home}/logs/app.log</defaultValue>"+
+					    "</discriminator>"+
+					        "<sift>"+
+					    
+					         
 								/*"<filter class=\"com.aem.community.core.filters.LogbackFilter\"/>"+*/
 									/*"<evaluator>"+
 								        "<expression>return true;</expression>"+
@@ -45,15 +52,19 @@ public class ConfigAppExample {
 								     "<OnMismatch>DENY</OnMismatch>"+
 								     "<OnMatch>ACCEPT</OnMatch>"+
 								"</filter>"+*/
-						 		"<file>${sling.home}/logs/app.log</file>\n" +
+						 		/*"<file>${sling.home}/logs/app.log</file>\n" +*/
+								"<appender name=\"app\" class=\"ch.qos.logback.core.FileAppender\">"+
+								"<file>${sling.home}/logs/${whs}.log</file>\n" +
 								"<append>true</append>\n"+
 								"<encoder>\n"+
 									"<pattern>%d %-5level [%thread] %logger{30} %marker- %msg %n</pattern>\n"+
 									"<immediateFlush>true</immediateFlush>\n"+
 								"</encoder>\n"+
 							   "</appender>\n"+
+								"</sift>"+
+							   " </appender>"+
 							   "<logger name=\"com.aem.community\" level=\"DEBUG\" additivity=\"false\">\n"+
-							   "     <appender-ref ref=\"app\" />\n" +
+							   "     <appender-ref ref=\"SIFT\" />\n" +
 				               "  </logger>\n" +
 							   "</included>";
 
